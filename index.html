@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#F7F3EE" />
+  <title>她影 · 女性名人灵魂同频测试</title>
+  <meta name="description" content="通过 15 道题，找到与你灵魂同频的古今中外女性名人——在她的故事里，看见你自己。" />
+
+  <!-- Google Fonts：思源宋体 + 思源黑体 + Playfair Display + Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Inter:wght@300;400;500;600&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- 全局样式 -->
+  <link rel="stylesheet" href="css/style.css" />
+
+  <!-- html2canvas CDN：用于生成分享图 -->
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+</head>
+<body>
+  <div id="app">
+    <!-- ============================================================
+         1. 首页 Landing View
+         ============================================================ -->
+    <section id="viewLanding" class="view landing active">
+      <div class="brand-logo">🌸</div>
+      <h1 class="brand-title font-serif-cn">她影</h1>
+      <p class="brand-sub font-serif-en">HerSight · Soul Mirror</p>
+
+      <div class="landing-emblems">
+        <div class="emblem">🌙</div>
+        <div class="emblem">💗</div>
+        <div class="emblem">🌊</div>
+        <div class="emblem">🔥</div>
+      </div>
+
+      <p class="brand-slogan font-serif-cn">在她的故事里，看见你自己。</p>
+      <p class="brand-slogan-sub">每一位女性，都是一种答案。</p>
+
+      <button class="btn-primary" id="btnStart">
+        <span>寻找灵魂同频者</span>
+        <span>→</span>
+      </button>
+
+      <p class="brand-meta">15 道题 · 约 3 分钟 · 免费无广告</p>
+    </section>
+
+    <!-- ============================================================
+         2. 答题页 Quiz View
+         ============================================================ -->
+    <section id="viewQuiz" class="view">
+      <div class="quiz-header">
+        <button class="btn-secondary" id="btnBackHome" style="padding:0 16px;min-height:36px;font-size:13px;">
+          ← 返回
+        </button>
+        <div class="quiz-progress-text">
+          <strong id="quizNow">1</strong>
+          <span> / </span>
+          <span id="quizTotal">15</span>
+        </div>
+      </div>
+
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+
+      <div class="question-card" id="questionCard">
+        <div class="question-stem font-serif-cn" id="questionStem"></div>
+        <div class="options-list" id="optionsList">
+          <!-- 4 个选项由 JS 渲染 -->
+        </div>
+      </div>
+
+      <div class="quiz-nav">
+        <button class="btn-secondary" id="btnPrev">上一题</button>
+        <button class="btn-primary" id="btnNext" disabled>下一题 →</button>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         3. 匹配页 Matching View
+         ============================================================ -->
+    <section id="viewMatching" class="view matching">
+      <div class="matching-glow" id="matchingGlow"></div>
+      <p class="matching-title" id="matchingTitle">正在倾听你的灵魂...</p>
+
+      <div class="matching-emoji-row">
+        <div class="matching-emoji" id="mEmoji1">🌙</div>
+        <div class="matching-emoji" id="mEmoji2">💗</div>
+        <div class="matching-emoji" id="mEmoji3">🌊</div>
+        <div class="matching-emoji" id="mEmoji4">🔥</div>
+      </div>
+
+      <p class="matching-title" id="matchingTitle2" style="opacity:0;">跨越时空，于 16 位灵魂中</p>
+    </section>
+
+    <!-- ============================================================
+         4. 结果页 Result View
+         ============================================================ -->
+    <section id="viewResult" class="view">
+      <!-- 顶部横幅：灵魂代码 + 原型名 -->
+      <div class="result-banner">
+        <div class="result-code" id="rCode">🌙💗🌊🔥</div>
+        <div class="result-archetype font-serif-cn" id="rArchetype">漱玉</div>
+        <div class="result-archetype-label">型 · 灵魂原型</div>
+      </div>
+
+      <!-- ★★★ 可截图分享区域 shareCard（3:4 竖图最佳比例） -->
+      <div class="share-card" id="shareCard">
+        <!-- 名人头像占位 -->
+        <div
+          class="celeb-portrait"
+          id="rPortrait"
+          style="background: linear-gradient(135deg, #8B6F8C 0%, #B5838D 100%);"
+        >
+          🪷
+        </div>
+        <h2 class="celeb-name-cn font-serif-cn" id="rName">李清照</h2>
+        <p class="celeb-name-en font-serif-en" id="rNameEn">Li Qingzhao</p>
+
+        <div class="celeb-meta" id="rMeta">
+          <!-- 年代 + 领域标签 -->
+        </div>
+
+        <p class="celeb-tagline font-serif-cn" id="rTagline">
+          词国皇后，风骨不输男儿
+        </p>
+
+        <!-- 分享图专用：一条代表同频点 -->
+        <div class="share-resonance" id="shareResonance">
+          你和李清照一样，内心藏着一个不愿轻易示人的丰富世界。
+        </div>
+
+        <!-- 水印 -->
+        <div class="watermark">她影 · HerSight</div>
+      </div>
+
+      <!-- ★★★ 你们的灵魂同频点（3~5 条） -->
+      <div class="section">
+        <div class="section-title">
+          🌟 你们的灵魂同频点
+          <span>Resonance</span>
+        </div>
+        <div class="resonance-list" id="rResonance">
+          <!-- 由 JS 渲染 -->
+        </div>
+      </div>
+
+      <!-- 她的故事 -->
+      <div class="section">
+        <div class="section-title">
+          📖 她的故事
+          <span>Her Story</span>
+        </div>
+        <p class="bio-text" id="rBio"></p>
+      </div>
+
+      <!-- 她的光芒：成就卡片 -->
+      <div class="section">
+        <div class="section-title">
+          ✨ 她的光芒
+          <span>Achievements</span>
+        </div>
+        <div class="achievements-row" id="rAchievements">
+          <!-- 横排滑动 -->
+        </div>
+      </div>
+
+      <!-- 她留下的话：金句 -->
+      <div class="section">
+        <div class="section-title">
+          💬 她留下的话
+          <span>Quotes</span>
+        </div>
+        <div class="quotes-list" id="rQuotes">
+          <!-- 由 JS 渲染 -->
+        </div>
+      </div>
+
+      <!-- 你也可能与她们同频 -->
+      <div class="section">
+        <div class="section-title">
+          💫 你也可能同频
+          <span>Also Like</span>
+        </div>
+        <div class="also-like-row" id="rAlsoLike">
+          <!-- 由 JS 渲染 -->
+        </div>
+      </div>
+
+      <!-- 底部按钮组 -->
+      <div class="result-actions">
+        <button class="btn-primary" id="btnShare">📸 生成分享图</button>
+        <div class="btn-row">
+          <button class="btn-secondary" id="btnRestart">🔁 再找一次</button>
+          <button class="btn-secondary" id="btnCopyLink">🔗 复制链接</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ============================================================
+       5. 分享图预览 Modal
+       ============================================================ -->
+  <div class="modal-mask" id="shareModal">
+    <div class="modal-body">
+      <p class="modal-title font-serif-cn">✨ 你的专属分享卡</p>
+      <div class="modal-img-wrap" id="modalImgWrap">
+        <!-- 生成的图片放这里 -->
+      </div>
+      <p class="modal-tips">
+        长按图片保存到相册 💕<br />
+        或点击右上角分享到朋友圈 / 小红书
+      </p>
+      <button class="modal-close" id="btnModalClose">关闭</button>
+    </div>
+  </div>
+
+  <!-- ============ 数据层 & 算法 & 应用层（注意加载顺序！） ============ -->
+  <script src="js/data_celebrities.js"></script>
+  <script src="js/data_questions.js"></script>
+  <script src="js/algorithm.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
